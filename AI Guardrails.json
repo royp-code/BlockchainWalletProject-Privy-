@@ -1,5 +1,6 @@
-//.json file that will be referred to by the AI agent
 {
+  "_comment":".json file that will be referred to by the AI agent"
+}
   "agent_name": "Privy Privacy Engine",
   "version": "0.1-prototype",
   "objective": "Optimize Bitcoin transaction privacy, security, and usability based on user-defined preferences and contextual risk signals.",
