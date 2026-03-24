@@ -1,0 +1,188 @@
+//.json file that will be referred to by the AI agent
+{
+  "agent_name": "Privy Privacy Engine",
+  "version": "0.1-prototype",
+  "objective": "Optimize Bitcoin transaction privacy, security, and usability based on user-defined preferences and contextual risk signals.",
+  
+  "core_principles": [
+    "User sovereignty over funds at all times",
+    "Privacy by default, transparency by design",
+    "Minimize trust assumptions",
+    "Fail safely under uncertainty",
+    "Never expose sensitive metadata unnecessarily"
+  ],
+
+  "inputs": {
+    "user_preferences": {
+      "privacy_level": ["LOW", "HIGH", "CUSTOM"],
+      "urgency": ["FAST", "NORMAL"],
+      "auto_mode": true
+    },
+    "transaction_context": {
+      "amount_btc": "float",
+      "recipient_type": ["KNOWN", "NEW", "HIGH_RISK"],
+      "network_conditions": ["LOW_FEES", "NORMAL", "HIGH_FEES"]
+    },
+    "wallet_state": {
+      "available_utxos": "integer",
+      "multisig_threshold": "integer",
+      "signers_online": "integer"
+    }
+  },
+
+  "decision_engine": {
+    "base_rules": [
+      {
+        "condition": "privacy_level == LOW",
+        "action": "STANDARD_TRANSACTION"
+      },
+      {
+        "condition": "privacy_level == MEDIUM",
+        "action": "PAYJOIN"
+      },
+      {
+        "condition": "privacy_level == HIGH",
+        "action": "SILENT_PAYMENTS"
+      },
+      {
+        "condition": "privacy_level == MAX",
+        "action": "COINSWAP"
+      }
+    ],
+    "override_rules": [
+      {
+        "condition": "amount_btc > 1.0",
+        "action": "INCREASE_PRIVACY_LEVEL"
+      },
+      {
+        "condition": "recipient_type == NEW",
+        "action": "PREFER_SILENT_PAYMENTS"
+      },
+      {
+        "condition": "recipient_type == HIGH_RISK",
+        "action": "FORCE_MAX_PRIVACY"
+      },
+      {
+        "condition": "urgency == FAST",
+        "action": "AVOID_COINSWAP"
+      },
+      {
+        "condition": "network_conditions == HIGH_FEES",
+        "action": "MINIMIZE_COMPLEX_ROUTES"
+      }
+    ],
+    "fallback_logic": {
+      "on_failure": "DOWNGRADE_PRIVACY_GRADUALLY",
+      "minimum_mode": "STANDARD_TRANSACTION"
+    }
+  },
+
+  "transaction_simulation": {
+    "states": [
+      "INITIATED",
+      "ANALYZING",
+      "ROUTING",
+      "OBFUSCATING",
+      "SIGNING",
+      "BROADCASTING",
+      "CONFIRMED"
+    ],
+    "method_flows": {
+      "STANDARD_TRANSACTION": [
+        "INITIATED",
+        "SIGNING",
+        "BROADCASTING",
+        "CONFIRMED"
+      ],
+      "PAYJOIN": [
+        "INITIATED",
+        "ANALYZING",
+        "ROUTING",
+        "OBFUSCATING",
+        "SIGNING",
+        "BROADCASTING",
+        "CONFIRMED"
+      ],
+      "SILENT_PAYMENTS": [
+        "INITIATED",
+        "ANALYZING",
+        "OBFUSCATING",
+        "SIGNING",
+        "BROADCASTING",
+        "CONFIRMED"
+      ],
+      "COINSWAP": [
+        "INITIATED",
+        "ANALYZING",
+        "ROUTING",
+        "OBFUSCATING",
+        "SIGNING",
+        "BROADCASTING",
+        "CONFIRMED"
+      ]
+    },
+    "ui_messages": [
+      "Analyzing transaction context...",
+      "Evaluating privacy risks...",
+      "Selecting optimal routing...",
+      "Obfuscating transaction graph...",
+      "Broadcasting to network..."
+    ]
+  },
+
+  "frost_multisig": {
+    "scheme": "FROST_THRESHOLD",
+    "configuration": {
+      "total_signers": 5,
+      "threshold": 3
+    },
+    "signing_flow": [
+      "COLLECT_PARTIAL_SIGNATURES",
+      "VERIFY_THRESHOLD",
+      "AGGREGATE_SIGNATURE",
+      "FINALIZE_TRANSACTION"
+    ],
+    "rules": [
+      {
+        "condition": "signers_online < threshold",
+        "action": "DELAY_TRANSACTION"
+      },
+      {
+        "condition": "threshold_reached == true",
+        "action": "PROCEED_TO_BROADCAST"
+      }
+    ],
+    "fail_safes": [
+      "Timeout and notify user",
+      "Allow manual override",
+      "Fallback to alternative signer set"
+    ]
+  },
+
+  "agentic_behaviors": {
+    "auto_privacy_adjustment": true,
+    "risk_scoring": {
+      "low": "Known recipient, small amount",
+      "medium": "New recipient, moderate amount",
+      "high": "High-risk recipient or large amount"
+    },
+    "adaptive_actions": [
+      "Increase privacy for high-risk transactions",
+      "Delay transaction under suspicious conditions",
+      "Recommend alternative routing methods"
+    ]
+  },
+
+  "safety_constraints": [
+    "Never execute transactions without user confirmation",
+    "Never reduce privacy below user-defined minimum",
+    "Never expose raw UTXO data to external parties",
+    "Always simulate before execution in prototype mode"
+  ],
+
+  "prototype_limitations": {
+    "no_real_blockchain_interaction": true,
+    "no_real_cryptographic_signing": true,
+    "simulated_network_responses": true
+  }
+}
